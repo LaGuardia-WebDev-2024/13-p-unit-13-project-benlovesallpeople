@@ -1,88 +1,86 @@
 <!-- Unit 13 Project
 Requirements
-[  ] Two Interactive Drop-down Inputs 
-[  ] Two Different jQuery Animation Methods 
-[  ] Add Five CSS Declarations
-[  ] Include Three Images
+[ x ] Two Interactive Drop-down Inputs 
+[ x ] Two Different jQuery Animation Methods 
+[ x ] Add Five CSS Declarations
+[ x ] Include Three Images
 
 Select ONE Additional Feature to Add  
 [ no ] Feature 1 - Google Font
 [ no ] Feature 2 - Upload a Font
-[ no ] Feature 3 - .mouseover() Method
+[ yes ] Feature 3 - .mouseover() Method
 [ no ] Feature 4 - :hover Feature 
 [ no ] Feature 5 - Add an Additional Interactive Drop-down
 -->
 
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Unit 13 Project</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <h1>Quiz About [Me]</h1>
-    <hr />
-    <!-- Movie Question -->
-    <form id="movie-form">
-      <label>
-        🎥 What is my favorite movie?
-        <select id="movie-answer">
-          <option value="movie1">movie 1</option>
-          <option value="movie2">movie 2</option>
-          <option value="movie3">movie 3</option>
-          <option value="movie4">movie 4</option>
-        </select>
-      </label>
-      <button type="submit">Check Movie Answer</button>
-    </form>
-    <div id="movie-result"></div>
-    <hr />
-    <!-- Book Question -->
-    <form id="book-form">
-      <label>
-        📖 What is my favorite book?
-        <select id="book-answer">
-          <option value="book1">book 1</option>
-          <option value="book2">book 2</option>
-          <option value="book3">book 3</option>
-          <option value="book4">book 4</option>
-        </select>
-      </label>
-      <button type="submit">Check Book Answer</button>
-    </form>
-    <div id="book-result"></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script>
-      //Movie Question jQuery Code
-      $("#movie-form").on("submit", function (event) {
-        event.preventDefault();
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jazz Saxophonists Interactive</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Jazz Saxophonists</h1>
 
-        var $answer = $("#movie-answer");
-        var answer = $answer.val();
+  <!-- Interactive Drop-down 1 -->
+  <label for="sax-list">Choose a saxophonist:</label>
+  <select id="sax-list">
+    <option value="">--Select--</option>
+    <option value="parker">Charlie Parker</option>
+    <option value="coltrane">John Coltrane</option>
+    <option value="rollins">Sonny Rollins</option>
+  </select>
+  <div id="sax-info"></div>
 
-        if (answer === "movie1") {
-          $("#movie-result").text("YESSSS!");
-        } else {
-          $("#movie-result").text("Try Again!");
-        }
-      });
+  <label for="album-list">Choose an album:</label>
+  <select id="album-list">
+    <option value="">--Select--</option>
+    <option value="bird">"Bird and Diz"</option>
+    <option value="giant">"Giant Steps"</option>
+    <option value="tenor">"Saxophone Colossus"</option>
+  </select>
+  <div id="album-info"></div>
 
-      //Book Question jQuery Code
-      $("#book-form").on("submit", function (event) {
-        event.preventDefault();
+  <h2>Gallery</h2>
+  <div class="gallery">
+    <img src="https://cdn.glitch.global/b32d62f8-5851-4a50-b3fe-87aa6da6896c/charlie.jpg?v=1747690570223" alt="Charlie Parker" class="sax-image">
+    <img src="https://cdn.glitch.global/b32d62f8-5851-4a50-b3fe-87aa6da6896c/coltrane.jpg?v=1747690564728" alt="John Coltrane" class="sax-image">
+    <img src="https://cdn.glitch.global/b32d62f8-5851-4a50-b3fe-87aa6da6896c/rollins.jpg?v=1747690559433" alt="Sonny Rollins" class="sax-image">
+  </div>
+  <div id="caption"></div>
 
-        var $answer = $("#book-answer");
-        var answer = $answer.val();
+  <script>
+    $('#sax-list').on('change', function() {
+      var sel = $(this).val();
+      var text = '';
+      if (sel === 'parker') text = 'Charlie Parker pioneered bebop.';
+      else if (sel === 'coltrane') text = 'John Coltrane mastered modal jazz.';
+      else if (sel === 'rollins') text = 'Sonny Rollins is known for improvisation.';
+      $('#sax-info').stop(true).text(text).slideToggle(400);
+    });
+    
+    $('#album-list').on('change', function() {
+      var sel = $(this).val();
+      var msg = '';
+      if (sel === 'bird') msg = '"Bird and Diz" is a studio album by Charlie Parker and Dizzy Gillespie, showcasing their collaborative work in bebop.';
+      else if (sel === 'giant') msg = '"Giant Steps" was Coltranes first album as leader for the label, with which he had signed a new contract the previous year. The record is regarded as one of the most influential jazz albums of all time.';
+      else if (sel === 'tenor') msg = '"Saxophone Colossus" is the sixth studio album by American jazz saxophonist Sonny Rollins. Perhaps his best-known album, it is often considered his breakthrough record.';
+      $('#album-info')
+        .stop(true)
+        .hide()
+        .text(msg)
+        .fadeToggle(500)
+        .animate({ fontSize: '18px' }, 300);
+    });
 
-        if (answer === "book1") {
-          $("#book-result").text("YESSSS!");
-        } else {
-          $("#book-result").text("Try Again!");
-        }
-      });
-    </script>
-  </body>
-
-  <!--- Taken From Khan Academy HTML/JS: Making webpages interactive with jQuery-->
+    $('.sax-image').on('mouseover', function() {
+      var name = $(this).attr('alt');
+      $('#caption').text(name).fadeIn(200);
+    }).on('mouseout', function() {
+      $('#caption').fadeOut(200);
+    });
+  </script>
+</body>
 </html>
